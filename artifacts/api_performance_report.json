@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "measurement": "in-process FastAPI TestClient; excludes network and container overhead",
+  "requests": 30,
+  "health_status_code": 200,
+  "latency_ms": {
+    "mean": 34.823339999972326,
+    "p50": 33.56555000004846,
+    "p95": 37.90209999988292,
+    "max": 73.84019999972224
+  },
+  "production_sla_configured": false
+}

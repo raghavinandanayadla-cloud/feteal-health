@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "health_status_code": 200,
+  "prediction_status_code": 200,
+  "prediction": 3,
+  "label": "Pathological",
+  "clinical_use": false
+}

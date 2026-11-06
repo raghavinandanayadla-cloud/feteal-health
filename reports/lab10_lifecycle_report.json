@@ -1,0 +1,11 @@
+{
+  "status": "READY",
+  "selected_model": "Random Forest",
+  "metrics": {
+    "accuracy": 0.9479905437352246,
+    "macro_f1": 0.9063383827448863
+  },
+  "deployment_model": "model.pkl",
+  "model_sha256": "51d7602b40be0b0cc2e255293d3c6ec93680a66e9baabbec15b2f63a5ac91b64",
+  "intended_use": "Educational demonstration only; not a clinical decision tool."
+}

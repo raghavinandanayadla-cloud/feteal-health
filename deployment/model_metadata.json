@@ -1,0 +1,42 @@
+{
+  "model_file": "model.pkl",
+  "model_name": "Random Forest",
+  "sha256": "51d7602b40be0b0cc2e255293d3c6ec93680a66e9baabbec15b2f63a5ac91b64",
+  "created_at": "2026-11-06T05:25:01.888466+00:00",
+  "source_model": "models\\best_fetal_model.pkl",
+  "features": [
+    "baseline value",
+    "accelerations",
+    "fetal_movement",
+    "uterine_contractions",
+    "light_decelerations",
+    "severe_decelerations",
+    "prolongued_decelerations",
+    "abnormal_short_term_variability",
+    "mean_value_of_short_term_variability",
+    "percentage_of_time_with_abnormal_long_term_variability",
+    "mean_value_of_long_term_variability",
+    "histogram_width",
+    "histogram_min",
+    "histogram_max",
+    "histogram_number_of_peaks",
+    "histogram_number_of_zeroes",
+    "histogram_mode",
+    "histogram_mean",
+    "histogram_median",
+    "histogram_variance",
+    "histogram_tendency"
+  ],
+  "classes": {
+    "1": "Normal",
+    "2": "Suspect",
+    "3": "Pathological"
+  },
+  "evaluation": {
+    "accuracy": 0.9479905437352246,
+    "macro_f1": 0.9063383827448863
+  },
+  "evaluation_split": "stratified held-out test partition",
+  "random_seed": 42,
+  "intended_use": "Educational demonstration only; not a clinical decision tool."
+}

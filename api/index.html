@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f5ef">
+  <title>Fetal Health Prediction | Project Console</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f2f5ef;
+      --surface: #ffffff;
+      --ink: #172f30;
+      --muted: #5b706f;
+      --line: #d8e2dc;
+      --teal: #176f68;
+      --teal-light: #e2f1eb;
+      --coral: #c65e43;
+      --coral-light: #f8e9e2;
+      --gold: #a56d13;
+      --shadow: 0 14px 36px rgba(27, 55, 48, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(23, 111, 104, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 111, 104, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 32px 32px;
+      font-family: "Aptos", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    .shell { max-width: 1160px; margin: 0 auto; padding: 28px 24px 48px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 750; }
+    .brand-mark {
+      display: grid; width: 38px; height: 38px; place-items: center;
+      color: white; background: var(--teal); border-radius: 11px;
+      font-family: Georgia, serif; font-size: 20px;
+    }
+    .brand small { display: block; color: var(--muted); font-size: 11px; font-weight: 600; }
+    nav { display: flex; align-items: center; gap: 9px; }
+    .nav-link, .primary-link {
+      display: inline-flex; min-height: 40px; align-items: center; justify-content: center;
+      padding: 0 14px; border: 1px solid var(--line); border-radius: 7px;
+      background: rgba(255,255,255,.82); font-size: 13px; font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-link:hover { border-color: var(--teal); }
+    .intro { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 30px; align-items: end; padding: 58px 0 30px; }
+    .eyebrow { margin: 0 0 10px; color: var(--teal); font-size: 12px; font-weight: 800; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 700px; font-family: Georgia, "Times New Roman", serif; font-size: 42px; font-weight: 500; line-height: 1.08; }
+    .intro-copy { max-width: 670px; margin: 15px 0 0; color: var(--muted); font-size: 16px; }
+    .live-box { padding: 17px; border-left: 3px solid var(--teal); background: var(--surface); box-shadow: var(--shadow); }
+    .live-label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .live-state { display: flex; align-items: center; gap: 9px; margin-top: 8px; font-weight: 750; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #98a6a0; }
+    .dot.online { background: var(--teal); box-shadow: 0 0 0 4px var(--teal-light); }
+    .dot.offline { background: var(--coral); box-shadow: 0 0 0 4px var(--coral-light); }
+    .status-detail { margin-top: 5px; color: var(--muted); font-size: 12px; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 12px 0 14px; }
+    h2 { margin: 0; font-size: 18px; }
+    .section-note { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .metric { min-height: 126px; padding: 20px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
+    .metric:nth-child(2) { border-top: 3px solid var(--coral); }
+    .metric:nth-child(1), .metric:nth-child(3) { border-top: 3px solid var(--teal); }
+    .metric-label { color: var(--muted); font-size: 12px; font-weight: 750; }
+    .metric-value { margin-top: 7px; font-family: Georgia, serif; font-size: 32px; line-height: 1.15; }
+    .metric-foot { margin-top: 5px; color: var(--muted); font-size: 11px; }
+    .content-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 16px; margin-top: 22px; }
+    .panel { padding: 21px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
+    .panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 15px; }
+    .panel-head span { color: var(--muted); font-size: 11px; }
+    .class-list { display: grid; gap: 9px; }
+    .class-row { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center; padding: 11px; background: #f7f9f6; }
+    .class-number { display: grid; width: 31px; height: 31px; place-items: center; border-radius: 8px; background: var(--teal-light); color: var(--teal); font-weight: 800; }
+    .class-row:nth-child(2) .class-number { background: #fbf0d9; color: var(--gold); }
+    .class-row:nth-child(3) .class-number { background: var(--coral-light); color: var(--coral); }
+    .class-name { font-size: 13px; font-weight: 800; }
+    .class-description { color: var(--muted); font-size: 11px; }
+    .feature-count { padding: 4px 8px; border-radius: 99px; background: var(--teal-light); color: var(--teal); font-size: 11px; font-weight: 800; }
+    .feature-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; margin: 0; padding: 0; list-style: none; }
+    .feature-list li { padding: 7px 0; border-bottom: 1px solid #edf1ed; color: #35504e; font-size: 11px; overflow-wrap: anywhere; }
+    .endpoint-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .endpoint { display: block; padding: 13px; border: 1px solid var(--line); background: rgba(255,255,255,.78); text-decoration: none; }
+    .endpoint:hover { border-color: var(--teal); }
+    .method { color: var(--teal); font-family: Consolas, monospace; font-size: 11px; font-weight: 800; }
+    .endpoint-name { margin-top: 3px; font-size: 13px; font-weight: 800; }
+    .endpoint-desc { margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .notice { margin-top: 18px; padding: 13px 15px; border-left: 3px solid var(--coral); background: var(--coral-light); color: #633d31; font-size: 12px; }
+    footer { display: flex; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 15px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    @media (max-width: 760px) {
+      .shell { padding: 18px 15px 32px; }
+      .topbar { align-items: flex-start; }
+      nav { gap: 6px; }
+      .nav-link { min-height: 36px; padding: 0 9px; font-size: 11px; }
+      .intro { grid-template-columns: 1fr; gap: 18px; padding-top: 42px; }
+      h1 { font-size: 36px; }
+      .live-box { max-width: none; }
+      .metrics { grid-template-columns: 1fr; gap: 9px; }
+      .metric { min-height: 0; padding: 15px; }
+      .metric-value { font-size: 28px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .endpoint-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
+    }
+    @media (max-width: 420px) {
+      .brand { gap: 8px; font-size: 12px; }
+      .brand-mark { width: 33px; height: 33px; }
+      nav .nav-link:first-child { display: none; }
+      .feature-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark" aria-hidden="true">F</div><div>Fetal Health<small>LOCAL MODEL CONSOLE</small></div></div>
+      <nav aria-label="Project links">
+        <a class="nav-link" href="/health">Health JSON</a>
+        <a class="nav-link" href="/docs">API Docs</a>
+        <a class="nav-link" href="/redoc">Reference</a>
+      </nav>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Machine learning · model serving</p>
+        <h1 id="page-title">Fetal Health Prediction</h1>
+        <p class="intro-copy">A local classification service for fetal cardiotocography measurements. Explore the model, its evaluation, and the available inference endpoints.</p>
+      </div>
+      <aside class="live-box" aria-live="polite">
+        <div class="live-label">Service status</div>
+        <div class="live-state"><span class="dot" id="status-dot"></span><span id="status-text">Checking model…</span></div>
+        <div class="status-detail" id="status-detail">Connecting to the local inference service</div>
+      </aside>
+    </section>
+
+    <section aria-labelledby="evaluation-title">
+      <div class="section-heading">
+        <div><h2 id="evaluation-title">Model evaluation</h2><p class="section-note">Held-out test partition · Lab 3/4 evaluation</p></div>
+      </div>
+      <div class="metrics">
+        <article class="metric"><div class="metric-label">Test accuracy</div><div class="metric-value" id="accuracy">—</div><div class="metric-foot">Correct classifications on held-out data</div></article>
+        <article class="metric"><div class="metric-label">Macro F1</div><div class="metric-value" id="macro-f1">—</div><div class="metric-foot">Unweighted mean across the three classes</div></article>
+        <article class="metric"><div class="metric-label">Selected estimator</div><div class="metric-value" id="model-name" style="font-size:24px">Loading…</div><div class="metric-foot" id="model-version">Packaged local model</div></article>
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <section class="panel" aria-labelledby="classes-title">
+        <div class="panel-head"><h2 id="classes-title">Prediction classes</h2><span>Target: fetal_health</span></div>
+        <div class="class-list">
+          <div class="class-row"><span class="class-number">1</span><div><div class="class-name">Normal</div><div class="class-description">Pattern classified as normal in the source dataset.</div></div></div>
+          <div class="class-row"><span class="class-number">2</span><div><div class="class-name">Suspect</div><div class="class-description">Pattern classified as suspect in the source dataset.</div></div></div>
+          <div class="class-row"><span class="class-number">3</span><div><div class="class-name">Pathological</div><div class="class-description">Pattern classified as pathological in the source dataset.</div></div></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="features-title">
+        <div class="panel-head"><h2 id="features-title">Model input signals</h2><span class="feature-count" id="feature-count">21 inputs</span></div>
+        <ul class="feature-list" id="feature-list"><li>Loading feature contract…</li></ul>
+      </section>
+    </div>
+
+    <section aria-labelledby="endpoints-title">
+      <div class="section-heading" style="margin-top:24px"><div><h2 id="endpoints-title">API endpoints</h2><p class="section-note">Interactive request and response schemas are available in the docs.</p></div></div>
+      <div class="endpoint-list">
+        <a class="endpoint" href="/docs"><div class="method">GET · POST</div><div class="endpoint-name">Interactive API docs</div><div class="endpoint-desc">Inspect and try the available routes.</div></a>
+        <a class="endpoint" href="/health"><div class="method">GET /health</div><div class="endpoint-name">Health check</div><div class="endpoint-desc">Check whether the model loads.</div></a>
+        <a class="endpoint" href="/docs#/default/predict_predict_post"><div class="method">POST /predict</div><div class="endpoint-name">Run a prediction</div><div class="endpoint-desc">Submit all 21 named numeric features.</div></a>
+      </div>
+    </section>
+
+    <div class="notice"><strong>Educational use only.</strong> This model is not a medical device and must not be used to diagnose, monitor, or guide clinical care.</div>
+    <footer><span>Fetal Health Prediction · Local Docker service</span><span>Model results are estimates, not medical advice.</span></footer>
+  </main>
+  <script>
+    async function loadProjectDetails() {
+      const statusText = document.getElementById("status-text");
+      const statusDetail = document.getElementById("status-detail");
+      const statusDot = document.getElementById("status-dot");
+      try {
+        const [healthResponse, infoResponse] = await Promise.all([
+          fetch("/health"), fetch("/project-info")
+        ]);
+        const health = await healthResponse.json();
+        const info = await infoResponse.json();
+        statusText.textContent = health.model_loaded ? "Model ready" : "Model unavailable";
+        statusDetail.textContent = health.model_loaded ? "Inference endpoint is accepting requests" : "Run Lab 7 to package the trained model";
+        statusDot.classList.add(health.model_loaded ? "online" : "offline");
+        document.getElementById("model-name").textContent = info.model_name || "Fetal model";
+        document.getElementById("model-version").textContent = info.model_file || "Packaged local model";
+        const metrics = info.evaluation || {};
+        document.getElementById("accuracy").textContent = Number.isFinite(metrics.accuracy) ? `${(metrics.accuracy * 100).toFixed(1)}%` : "Not packaged";
+        document.getElementById("macro-f1").textContent = Number.isFinite(metrics.macro_f1) ? metrics.macro_f1.toFixed(3) : "Not packaged";
+        const features = Array.isArray(info.features) ? info.features : [];
+        document.getElementById("feature-count").textContent = `${features.length} inputs`;
+        const list = document.getElementById("feature-list");
+        list.replaceChildren(...features.map((feature) => {
+          const item = document.createElement("li");
+          item.textContent = feature;
+          return item;
+        }));
+      } catch (error) {
+        statusText.textContent = "Service details unavailable";
+        statusDetail.textContent = "Check the container logs and refresh this page";
+        statusDot.classList.add("offline");
+        document.getElementById("model-name").textContent = "Unavailable";
+      }
+    }
+    loadProjectDetails();
+  </script>
+</body>
+</html>
